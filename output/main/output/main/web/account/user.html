@@ -1,0 +1,67 @@
+<div class="page-inner">
+<div class="row">
+			<div style="margin: auto" class="col-md-6">
+				<div class="card">
+					<div class="card-header">
+						<div class="card-title">新增帳號</div>
+					</div>
+					<div class="card-body">
+						<div class="form-group">
+							<label for="username">帳號</label>
+							<input type="text" class="form-control" id="username">
+						</div>
+						<div class="form-group">
+							<label for="password">密碼</label>
+							<input type="text" class="form-control" id="password">
+						</div>
+						<div class="form-check">
+							<label for="password">帳號類型</label>
+							<br>
+							<label class="form-check-label">
+								<input id="direct" name="direct" class="form-check-input" type="checkbox">
+								<span class="form-check-sign">立即玩</span>
+							</label>
+							<label class="form-check-label">
+								<input id="molo" name="molo" class="form-check-input" type="checkbox">
+								<span class="form-check-sign">MOLO</span>
+							</label>
+						</div>
+					</div>
+					<div class="card-action">
+						<button id="submit" class="btn">送出</button>
+					</div>
+				</div>
+			</div>
+    </div>
+</div>
+<script src="account/func.js"></script>
+<script>
+	let params = new URLSearchParams(document.location.search);
+    let func = params.has('mode') ? params.get('mode') : ''
+
+	if (func == 'add') {
+		$('.card-title').text('新增帳號')
+	}
+
+	else if (func == 'edit') {
+		$('.card-title').text('編輯帳號')
+		let params = new URLSearchParams(window.location.search)
+		var id = params.has('id') ? params.get('id') : ''
+		selectUser(id)
+	}
+
+	// 新增帳號
+	$('#submit').click(()=>{
+		let username = $('#username').val()
+		let password = $('#password').val()
+		let direct = $('#direct').is(':checked') ? 1 : 0
+		let molo = $('#molo').is(':checked') ? 1 : 0
+		if (func == 'add') {
+			addUser(username, password, direct, molo)
+		}
+		else if (func == 'edit') {
+			editUser(id, username, password, direct, molo)
+		}
+	})
+</script>
+<script src="/custom/js/animation.js"></script>
