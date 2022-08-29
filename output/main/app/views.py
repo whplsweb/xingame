@@ -20,6 +20,7 @@ def preLogin(mode, mobile=None, password=None, coordinate=None):
     # subprocess.Popen(config.main['path'])'
     os.system(f'start /d "C:\Program Files (x86)\XinStars\\" XinUpdate.exe')
     touchByPhoto(imagePath=config.getImage(img='login'))
+    touchByPhoto(imagePath=config.getImage(img='new_confirm'))
     if mode == 'mobile':
         touchByPhoto(imagePath=config.getImage(mode='mobile', img='item1'))
         touchByPhoto(imagePath=config.getImage(mode='mobile', img='mobile_field'))

@@ -35,6 +35,21 @@ def touchByPhoto(imagePath, delay=None, duration=0, clicks=1, interval=0, confid
         sleep(1)
     touchByPos(coordinate)
 
+def move2Photo(imagePath, delay=None, duration=0, clicks=1, interval=0, confidence=0.5):
+    if delay:
+        sleep(delay)
+    while True:
+        coordinate = pyautogui.locateOnScreen(imagePath, confidence=confidence)
+        if coordinate:
+            eel.consoleLog(f'找到 {imagePath} 了 立即點擊')
+            break
+        print(getTime() + ' not found')
+        eel.consoleLog(f'找不到 {imagePath} 等待一秒後重試')
+        sleep(1)
+    # touchByPos(coordinate)
+    pyautogui.moveTo(coordinate)
+
+
 # def touchByPos(coordinate, delay=None, duration=0, clicks=1, interval=0):
 #     if delay:
 #         sleep(delay)
@@ -64,7 +79,7 @@ def getMultiplePos(imagePath, confidence=0.5):
     return coordinates
 
 
-def isPhotoExist(imagePath):
+def isPhotoExist(imagePath, confidence=0.5):
     # 因為有 judge_multi_com
 
     # sec = 3
@@ -72,7 +87,7 @@ def isPhotoExist(imagePath):
     # sleep(sec)
 
     # flag = pyautogui.locateOnScreen(imagePath)
-    flag = pyautogui.locateOnScreen(imagePath, confidence=0.5)
+    flag = pyautogui.locateOnScreen(imagePath, confidence=confidence)
     if flag:
         eel.consoleLog(f'存在 {imagePath}')
         return True

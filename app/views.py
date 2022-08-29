@@ -44,7 +44,7 @@ def preLogin(mode, mobile=None, password=None, coordinate=None):
         print(len(coordinates))
         count = 1
         for coordinate in coordinates:
-            #eel.consoleLog(f'登入 \n 帳號:{mobile} \n 登入方式:{mode}\n 第{ str(count) }隻角色')
+            eel.consoleLog(f'登入 \n 帳號:{mobile} \n 登入方式:{mode}\n 第{ str(count) }隻角色')
             if coordinate != coordinates[0]:
                 preLogin(mode, mobile, password, coordinate)
             doLogin(coordinate)
@@ -61,10 +61,10 @@ def doLogin(coordinate):
         sleep(1)
         # 已登入
         if not isPhotoExist(imagePath=config.getImage(img='warn1')):
-            #eel.consoleLog(f'沒有被強制退出')
+            eel.consoleLog(f'沒有被強制退出')
             print(getTime() +'沒有被強制退出')
             break
-        #eel.consoleLog(f'被強制退出 等30秒')
+        eel.consoleLog(f'被強制退出 等30秒')
         print(getTime() +'被強制退出 等30秒')
         sleep(30)
         touchByPhoto(imagePath=config.getImage(img='confirm1'))
@@ -73,10 +73,10 @@ def doLogin(coordinate):
     while True:
         flag = isPhotoExist(imagePath=config.getImage(img='judge_multi_com'))
         if flag:
-            #eel.consoleLog(f'找到 judge_multi_com 了')
+            eel.consoleLog(f'找到 judge_multi_com 了')
             print(getTime() +'找到 judge_multi_com 了')
             break
-        #eel.consoleLog(f'還沒找到 judge_multi_com')
+        eel.consoleLog(f'還沒找到 judge_multi_com')
         print(getTime() +'還沒找到 judge_multi_com')
         sleep(1)
 
@@ -102,15 +102,15 @@ def start_auto_control():
         username = user[1]
         password = user[2]
         mobile = int(user[3])
-        #eel.consoleLog(f'登入 帳號:{username}')
+        eel.consoleLog(f'登入 帳號:{username}')
         if mobile:
-            #eel.consoleLog(f'登入方式:立即玩')
+            eel.consoleLog(f'登入方式:立即玩')
             preLogin('mobile', username, password)
-            #eel.consoleLog(f'登入完成')
+            eel.consoleLog(f'登入完成')
 
         molo = int(user[4])
         if molo:
-            #eel.consoleLog(f'登入方式:MOLO')
+            eel.consoleLog(f'登入方式:MOLO')
             preLogin('molo', username, password)
-            #eel.consoleLog(f'登入完成')
-    #eel.consoleLog(f'程式已結束運行')
+            eel.consoleLog(f'登入完成')
+    eel.consoleLog(f'程式已結束運行')
