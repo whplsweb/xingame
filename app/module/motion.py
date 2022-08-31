@@ -63,6 +63,19 @@ def getMultiplePos(imagePath, confidence=0.5):
         sleep(1)
     return coordinates
 
+def getPos(imagePath, confidence=0.5):
+    while True:
+        coordinate = list(pyautogui.locateCenterOnScreen(imagePath, confidence=confidence, grayscale=False))
+        if coordinate:
+            #eel.consoleLog(f'找到(多個座標) {imagePath} 了 立即點擊')
+            #eel.consoleLog(len(coordinates))
+            #eel.consoleLog(coordinates)
+            break
+        #eel.consoleLog(f'找不到(多個座標) {imagePath} 等待一秒後重試')
+        print(getTime() + ' not found')
+        sleep(1)
+    return coordinate
+
 
 def isPhotoExist(imagePath):
     # 因為有 judge_multi_com

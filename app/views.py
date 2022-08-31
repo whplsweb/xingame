@@ -1,8 +1,9 @@
 import app.config as config
 import pyautogui
 import os
-from app.module.motion import touchByPhoto, touchByPos, getMultiplePos,isPhotoExist, copePaste, typeWrite
+from app.module.motion import touchByPhoto, touchByPos,getPos, getMultiplePos,isPhotoExist, copePaste, typeWrite
 from app.module.func import getTime, messageBox
+from app.module.res import Res
 from time import sleep
 from func.db.model.account import selectAllUsers
 import eel
@@ -19,6 +20,7 @@ def preLogin(mode, mobile=None, password=None, coordinate=None):
     # os.startfile(config.main['path'])
     # subprocess.Popen(config.main['path'])'
     os.system(f'start /d "C:\Program Files (x86)\XinStars\\" XinUpdate.exe')
+    
     touchByPhoto(imagePath=config.getImage(img='login'))
     touchByPhoto(imagePath=config.getImage(img='new_confirm'))
     if mode == 'mobile':
@@ -95,7 +97,10 @@ def doLogin(coordinate):
     touchByPhoto(imagePath=config.getImage(img='close'))
     return
 
-def start_auto_control():
+
+def start_auto_control(mode=None):
+    r = Res()
+    r.changeRes(1600, 900)
     users = selectAllUsers()
     for user in users:
         id = user[0]
@@ -103,10 +108,11 @@ def start_auto_control():
         password = user[2]
         mobile = int(user[3])
         #eel.consoleLog(f'登入 帳號:{username}')
-        if mobile:
-            #eel.consoleLog(f'登入方式:立即玩')
-            preLogin('mobile', username, password)
-            #eel.consoleLog(f'登入完成')
+        if mode!='molo':
+            if mobile:
+                #eel.consoleLog(f'登入方式:立即玩')
+                preLogin('mobile', username, password)
+                #eel.consoleLog(f'登入完成')
 
         molo = int(user[4])
         if molo:
@@ -114,3 +120,4 @@ def start_auto_control():
             preLogin('molo', username, password)
             #eel.consoleLog(f'登入完成')
     #eel.consoleLog(f'程式已結束運行')
+    r.reductRes()
