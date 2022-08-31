@@ -1,4 +1,5 @@
 async function addTask(time, type) {
+    console.log(time)
     let res = await eel.taskadd(time, type)()
     res = JSON.parse(res)
     let code = res.code
