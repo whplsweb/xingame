@@ -4,6 +4,7 @@ from func.db.model.task import selectAllTasks
 def reboot_reservation(reserved_time):
     current_time = datetime.datetime.now()
     reserved_time = datetime.datetime.strptime(f"{current_time.strftime('%Y-%m-%d')} {reserved_time}","%Y-%m-%d %H:%M")
+    
     time_interval_sec = int((reserved_time - current_time).total_seconds())
     if time_interval_sec < 0:
         current_time = current_time + datetime.timedelta(days=1)

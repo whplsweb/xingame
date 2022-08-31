@@ -40,12 +40,15 @@ def preLogin(mode, mobile=None, password=None, coordinate=None):
         typeWrite(password)
         touchByPhoto(imagePath=config.getImage(mode='molo', img='login'),confidence=0.9)
         # touchByPhoto(imagePath=config.getImage(mode='mobile', img='item2'))
-
+    sleep(10)
     if not coordinate:
-        coordinates = getMultiplePos(imagePath=config.getImage(mode='mobile', img='login'), confidence=0.9)
-        print(len(coordinates))
+        coordinates = getMultiplePos(imagePath=config.getImage(mode='mobile', img='login'), confidence=0.95)
+        print(f'總共找到:{str(len(coordinates))}個座標')
+        coordinates = coordinates[::-1][::-1]
         count = 1
         for coordinate in coordinates:
+            x, y, c, d = coordinate
+            print(f'點擊 x:{x} y:{y}')
             #eel.consoleLog(f'登入 \n 帳號:{mobile} \n 登入方式:{mode}\n 第{ str(count) }隻角色')
             if coordinate != coordinates[0]:
                 preLogin(mode, mobile, password, coordinate)
@@ -115,9 +118,10 @@ def start_auto_control(mode=None):
                 #eel.consoleLog(f'登入完成')
 
         molo = int(user[4])
-        if molo:
-            #eel.consoleLog(f'登入方式:MOLO')
-            preLogin('molo', username, password)
-            #eel.consoleLog(f'登入完成')
+        if mode!='mobile':
+            if molo:
+                #eel.consoleLog(f'登入方式:MOLO')
+                preLogin('molo', username, password)
+                #eel.consoleLog(f'登入完成')
     #eel.consoleLog(f'程式已結束運行')
     r.reductRes()
