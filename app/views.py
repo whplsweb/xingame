@@ -1,3 +1,4 @@
+import traceback
 import app.config as config
 import pyautogui
 import os
@@ -27,7 +28,8 @@ def preLogin(mode, mobile=None, password=None, coordinate=None):
         touchByPhoto(imagePath=config.getImage(mode='mobile', img='item1'))
         touchByPhoto(imagePath=config.getImage(mode='mobile', img='mobile_field'))
         copePaste(mobile)
-        touchByPhoto(imagePath=config.getImage(mode='mobile', img='confirm1'))
+        # touchByPhoto(imagePath=config.getImage(mode='mobile', img='confirm1'))
+        touchByPhoto(imagePath=config.getImage(mode='mobile', img='confirmpwd'))
         touchByPhoto(imagePath=config.getImage(mode='mobile', img='password_field'))
         copePaste(password)
         touchByPhoto(imagePath=config.getImage(mode='mobile', img='confirm2'))
@@ -103,25 +105,29 @@ def doLogin(coordinate):
 
 def start_auto_control(mode=None):
     r = Res()
-    r.changeRes(1600, 900)
-    users = selectAllUsers()
-    for user in users:
-        id = user[0]
-        username = user[1]
-        password = user[2]
-        mobile = int(user[3])
-        #eel.consoleLog(f'登入 帳號:{username}')
-        if mode!='molo':
-            if mobile:
-                #eel.consoleLog(f'登入方式:立即玩')
-                preLogin('mobile', username, password)
-                #eel.consoleLog(f'登入完成')
+    try:
+        r.changeRes(1600, 900)
+        users = selectAllUsers()
+        for user in users:
+            id = user[0]
+            username = user[1]
+            password = user[2]
+            mobile = int(user[3])
+            #eel.consoleLog(f'登入 帳號:{username}')
+            if mode!='molo':
+                if mobile:
+                    #eel.consoleLog(f'登入方式:立即玩')
+                    preLogin('mobile', username, password)
+                    #eel.consoleLog(f'登入完成')
 
-        molo = int(user[4])
-        if mode!='mobile':
-            if molo:
-                #eel.consoleLog(f'登入方式:MOLO')
-                preLogin('molo', username, password)
-                #eel.consoleLog(f'登入完成')
-    #eel.consoleLog(f'程式已結束運行')
-    r.reductRes()
+            molo = int(user[4])
+            if mode!='mobile':
+                if molo:
+                    #eel.consoleLog(f'登入方式:MOLO')
+                    preLogin('molo', username, password)
+                    #eel.consoleLog(f'登入完成')
+        #eel.consoleLog(f'程式已結束運行')
+        r.reductRes()
+    except:
+        traceback.print_exc()
+        r.reductRes()
